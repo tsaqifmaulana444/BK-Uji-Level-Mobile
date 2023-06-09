@@ -39,14 +39,14 @@ class _HomeState extends State<Home> {
 
                         },
                       ),
-                      const Spacer(),
-                      Container(
-                        margin: const EdgeInsets.only(right: 12),
-                        child: const CircleAvatar(
-                          radius: 25,
-                          backgroundImage: AssetImage('assets/download.jpeg'),
-                        ),
-                      )
+                      // const Spacer(),
+                      // Container(
+                      //   margin: const EdgeInsets.only(right: 12),
+                      //   child: const CircleAvatar(
+                      //     radius: 25,
+                      //     backgroundImage: AssetImage('assets/download.jpeg'),
+                      //   ),
+                      // )
                     ]),
                   ),
                   Container(

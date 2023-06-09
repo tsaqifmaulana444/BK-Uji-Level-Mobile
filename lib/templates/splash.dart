@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bk_uji_level/templates/home.dart';
+import 'package:bk_uji_level/templates/login.dart';
 import 'package:flutter/material.dart';
 
 class Splash extends StatefulWidget {
@@ -20,7 +20,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Home()),
+        MaterialPageRoute(builder: (context) => const Login()),
       );
     });
 
