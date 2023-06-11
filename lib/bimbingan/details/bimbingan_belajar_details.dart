@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Details extends StatefulWidget {
-  const Details({super.key});
+class Bimbingan_Belajar_Details extends StatefulWidget {
+  const Bimbingan_Belajar_Details({super.key});
 
   @override
-  State<Details> createState() => _DetailsState();
+  State<Bimbingan_Belajar_Details> createState() => _Bimbingan_Belajar_DetailsState();
 }
 
-class _DetailsState extends State<Details> {
+class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
   int selectedIndex = 0;
 
   @override
@@ -31,15 +31,15 @@ class _DetailsState extends State<Details> {
                             color: const Color(0xFF000000),
                             iconSize: 24,
                             onPressed: () {
-                              Navigator.pushNamed(context, "/home");
+                              Navigator.pushNamed(context, "/bimbingan_belajar");
                             },
                             icon: const Icon(Icons.arrow_back_ios_new_rounded)),
                         const SizedBox(
                           width: 9,
                         ),
-                        const Text("Detail Pertemuan",
+                        const Text("Detail Bimbingan Belajar",
                             style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold))
+                                fontSize: 18, fontWeight: FontWeight.bold))
                       ],
                     ),
                   ),
