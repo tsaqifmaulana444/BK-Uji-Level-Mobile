@@ -75,7 +75,8 @@ class _HomeState extends State<Home> {
                                     "3",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 25
+                                      fontSize: 25,
+                                      color: Colors.white
                                     )
                                   ),
                                 ),
@@ -109,7 +110,8 @@ class _HomeState extends State<Home> {
                                     "!",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 30
+                                      fontSize: 30,
+                                      color: Colors.white
                                     )
                                     ),
                                 ),

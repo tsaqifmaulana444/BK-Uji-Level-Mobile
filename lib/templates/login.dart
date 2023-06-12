@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 80),
+                  margin: const EdgeInsets.fromLTRB(25, 80, 0, 0),
                   width: 105,
                   child: Image.asset("assets/logo.png"),
                 ),
