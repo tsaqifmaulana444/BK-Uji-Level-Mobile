@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../bimbingan/bimbingan_pribadi.dart';
+import 'login.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +14,28 @@ class _HomeState extends State<Home> {
   int selectedIndex = 0;
   final int _currentPageIndex = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
+  // Add this line to declare the token variable
+  String token = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(token);
+  }
+
+  Future<void> fetchData(String token) async {
+    print(token); // Print the token
+    final url = Uri.parse('http://127.0.0.1:8000/api/data'); // Replace with your API endpoint
+
+    final headers = {
+      'Authorization': 'Bearer $token', // Include the token in the Authorization header
+    };
+
+    final response = await http.get(url, headers: headers);
+
+    // Rest of the code to handle the response...
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +95,11 @@ class _HomeState extends State<Home> {
                                 child: const CircleAvatar(
                                   radius: 27,
                                   backgroundColor: Color(0xFFcb0c9f),
-                                  child: Text(
-                                    "3",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: Colors.white
-                                    )
-                                  ),
+                                  child: Text("3",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 25,
+                                          color: Colors.white)),
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -106,14 +127,11 @@ class _HomeState extends State<Home> {
                                 child: const CircleAvatar(
                                   radius: 27,
                                   backgroundColor: Color(0xFFcb0c9f),
-                                  child: Text(
-                                    "!",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      color: Colors.white
-                                    )
-                                    ),
+                                  child: Text("!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30,
+                                          color: Colors.white)),
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -139,14 +157,13 @@ class _HomeState extends State<Home> {
                               GestureDetector(
                                 onTap: () {},
                                 child: CircleAvatar(
-                                  radius: 27,
-                                  backgroundColor: const Color(0xFFcb0c9f),
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: Image.asset("assets/internet.png"),
-                                  )
-                                ),
+                                    radius: 27,
+                                    backgroundColor: const Color(0xFFcb0c9f),
+                                    child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: Image.asset("assets/internet.png"),
+                                    )),
                               ),
                               const SizedBox(height: 5),
                               const SizedBox(
