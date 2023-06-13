@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(25, 80, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(25, 70, 0, 0),
                     width: 105,
                     child: Image.asset("assets/logo.png"),
                   ),
@@ -63,23 +63,24 @@ class _LoginState extends State<Login> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Lanjutkan Dengan",
-                          style: TextStyle(
-                            fontSize: 21,
-                          ),
-                        ),
-                        Text(
                           "Login",
                           style: TextStyle(
-                            fontSize: 29,
+                            fontSize: 30,
                             fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "Login Untuk Melanjutkan",
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 60),
+                    margin: const EdgeInsets.only(top: 80),
                     padding: const EdgeInsets.symmetric(horizontal: 26),
                     child: Form(
                       key: _formKey,
@@ -94,7 +95,7 @@ class _LoginState extends State<Login> {
                               hintText: 'Enter your email',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(21),
+                                  Radius.circular(12),
                                 ),
                                 borderSide: BorderSide(color: Colors.blue),
                               ),
@@ -118,7 +119,7 @@ class _LoginState extends State<Login> {
                               hintText: 'Enter your password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(21),
+                                  Radius.circular(12),
                                 ),
                                 borderSide: BorderSide(color: Colors.blue),
                               ),
@@ -151,12 +152,12 @@ class _LoginState extends State<Login> {
                                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                   const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
-                                      Radius.circular(18),
+                                      Radius.circular(12),
                                     ),
                                   ),
                                 ),
                               ),
-                              child: const Text('Login'),
+                              child: const Text('Lanjutkan'),
                             ),
                           ),
                         ],

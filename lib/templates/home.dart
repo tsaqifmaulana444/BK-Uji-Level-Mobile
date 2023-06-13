@@ -26,10 +26,12 @@ class _HomeState extends State<Home> {
 
   Future<void> fetchData(String token) async {
     print(token); // Print the token
-    final url = Uri.parse('http://127.0.0.1:8000/api/data'); // Replace with your API endpoint
+    final url = Uri.parse(
+        'http://127.0.0.1:8000/api/data'); // Replace with your API endpoint
 
     final headers = {
-      'Authorization': 'Bearer $token', // Include the token in the Authorization header
+      'Authorization':
+          'Bearer $token', // Include the token in the Authorization header
     };
 
     final response = await http.get(url, headers: headers);
@@ -43,7 +45,7 @@ class _HomeState extends State<Home> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: _scaffoldKey,
-        backgroundColor: const Color(0xFFF0F0F0),
+        backgroundColor: const Color(0xFFF3F3F3),
         body: SafeArea(
             child: ListView(
           scrollDirection: Axis.vertical,
@@ -81,108 +83,60 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                //welcome card
                 Container(
-                    margin: const EdgeInsets.fromLTRB(20, 25, 20, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: const CircleAvatar(
-                                  radius: 27,
-                                  backgroundColor: Color(0xFFcb0c9f),
-                                  child: Text("3",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 25,
-                                          color: Colors.white)),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              const SizedBox(
-                                width: 60,
-                                child: Text(
-                                  "Total Pertemuan",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 71, 71, 71)),
-                                ),
-                              )
-                            ],
+                  width: double.infinity,
+                  margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+                  height: 140,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFcb0c9f), Color(0xFF7d27c8)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "LifeGuidance",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFFFFFFFF),
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: const CircleAvatar(
-                                  radius: 27,
-                                  backgroundColor: Color(0xFFcb0c9f),
-                                  child: Text("!",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 30,
-                                          color: Colors.white)),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              const SizedBox(
-                                width: 60,
-                                child: Text(
-                                  "Informasi Aplikasi",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 71, 71, 71)),
-                                ),
-                              )
-                            ],
+                          const SizedBox(height: 8),
+                          const Text(
+                            "Solusi bijak untuk kehidupan yang lebih baik, Menemukan arah hidup yang sesuai dengan kepribadianmu",
+                            style: TextStyle(
+                                fontSize: 12, color: Color(0xFFFFFFFF)),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: CircleAvatar(
-                                    radius: 27,
-                                    backgroundColor: const Color(0xFFcb0c9f),
-                                    child: SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: Image.asset("assets/internet.png"),
-                                    )),
-                              ),
-                              const SizedBox(height: 5),
-                              const SizedBox(
-                                width: 60,
-                                child: Text(
-                                  "Kunjungi Web",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 71, 71, 71)),
+                              TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
                                 ),
-                              )
+                                child: const Text(
+                                  "Kunjungi Website",
+                                  style: TextStyle(
+                                    color: Color(0xFFcb0c9f),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                              ),
                             ],
-                          ),
-                        ),
-                      ],
-                    )),
+                          )
+                        ]),
+                  ),
+                ),
 
                 // bimbingan section
                 Container(
@@ -226,10 +180,11 @@ class _HomeState extends State<Home> {
                                   Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           0, 20, 0, 25),
-                                      width: 65,
-                                      height: 65,
+                                      width: 60,
+                                      height: 60,
                                       child: Image.asset(
                                           "assets/communication.png")),
+                                  const SizedBox(height: 5),
                                   const Text("Bimbingan Pribadi",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -254,9 +209,10 @@ class _HomeState extends State<Home> {
                                   Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           0, 20, 0, 25),
-                                      width: 65,
-                                      height: 65,
+                                      width: 60,
+                                      height: 60,
                                       child: Image.asset("assets/idea.png")),
+                                  const SizedBox(height: 5),
                                   const Text("Bimbingan Belajar",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -281,10 +237,11 @@ class _HomeState extends State<Home> {
                                   Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           0, 20, 0, 25),
-                                      width: 65,
-                                      height: 65,
+                                      width: 60,
+                                      height: 60,
                                       child: Image.asset(
                                           "assets/conversation.png")),
+                                  const SizedBox(height: 5),
                                   const Text("Bimbingan Sosial",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -309,10 +266,11 @@ class _HomeState extends State<Home> {
                                   Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           0, 20, 0, 25),
-                                      width: 65,
-                                      height: 65,
+                                      width: 60,
+                                      height: 60,
                                       child:
                                           Image.asset("assets/portfolio.png")),
+                                  const SizedBox(height: 5),
                                   const Text("Bimbingan Karir",
                                       style: TextStyle(
                                           fontSize: 14,
@@ -345,7 +303,7 @@ class _HomeState extends State<Home> {
                       color: Color(0xFF141414)),
                 ),
                 accountEmail: const Text(
-                  'ujang@gmail.com',
+                  'udin@gmail.com',
                   style: TextStyle(
                       fontFamily: 'Roboto',
                       fontSize: 12,

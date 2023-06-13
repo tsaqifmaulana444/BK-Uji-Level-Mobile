@@ -49,6 +49,7 @@ class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
       debugShowCheckedModeBanner: false,
       title: "splash",
       home: Scaffold(
+        backgroundColor: Color(0xFFcb0c9f),
         body: Container(
           margin: const EdgeInsets.only(top: 10),
           child: Center(
