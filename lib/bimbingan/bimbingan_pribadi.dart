@@ -24,7 +24,7 @@ class _Bimbingan_PribadiState extends State<Bimbingan_Pribadi> {
   Future<void> fetchData() async {
     // user = ModalRoute.of(context)?.settings.arguments as Map;
     final response = await http.get(Uri.parse(
-        'https://3621-117-102-67-66.ngrok-free.app/api/bimbingan_pribadi/$user'));
+        'https://fbb7-117-102-67-66.ngrok-free.app/api/bimbingan_pribadi/$user'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);

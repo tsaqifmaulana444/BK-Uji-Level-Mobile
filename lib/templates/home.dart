@@ -109,13 +109,13 @@ class _HomeState extends State<Home> {
                                 color: Color(0xFFFFFFFF),
                                 fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 13),
                           const Text(
                             "Solusi bijak untuk kehidupan yang lebih baik, Menemukan arah hidup yang sesuai dengan kepribadianmu",
                             style: TextStyle(
                                 fontSize: 12, color: Color(0xFFFFFFFF)),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 13),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

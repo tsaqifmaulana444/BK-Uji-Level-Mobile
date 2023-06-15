@@ -25,7 +25,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://3621-117-102-67-66.ngrok-free.app/api/detail_bimbingan_pribadi/$bimbinganPribadiId'));
+        'https://fbb7-117-102-67-66.ngrok-free.app/api/detail_bimbingan_pribadi/$bimbinganPribadiId'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);

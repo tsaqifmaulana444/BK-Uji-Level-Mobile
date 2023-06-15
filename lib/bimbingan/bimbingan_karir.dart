@@ -23,7 +23,7 @@ class _Bimbingan_KarirState extends State<Bimbingan_Karir> {
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://3621-117-102-67-66.ngrok-free.app/api/bimbingan_karir/$user'));
+        'https://fbb7-117-102-67-66.ngrok-free.app/api/bimbingan_karir/$user'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
