@@ -66,7 +66,7 @@ class _Bimbingan_Karir_DetailsState extends State<Bimbingan_Karir_Details> {
                           color: const Color(0xFF000000),
                           iconSize: 24,
                           onPressed: () {
-                            Navigator.pushNamed(context, "/bimbingan_karir");
+                            Navigator.pushNamed(context, "/bimbingan_karir", arguments: bimbinganData["data"][0]["siswa"]["id"]);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         ),

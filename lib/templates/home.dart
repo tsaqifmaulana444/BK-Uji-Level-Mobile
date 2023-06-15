@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final user = ModalRoute.of(context)?.settings.arguments as Map;
-    print(user['id'].toString());
+    print(user['id']);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -168,7 +168,7 @@ class _HomeState extends State<Home> {
                                 Navigator.pushNamed(
                                   context,
                                   "/bimbingan_pribadi",
-                                  arguments: user['id'].toString(),
+                                  arguments: user['id'],
                                 );
                               },
                               child: Container(
@@ -200,7 +200,7 @@ class _HomeState extends State<Home> {
                                 Navigator.pushNamed(
                                   context,
                                   "/bimbingan_belajar",
-                                  arguments: user['id'].toString());
+                                  arguments: user['id']);
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -228,7 +228,7 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_sosial", arguments: user['id'].toString());
+                                    context, "/bimbingan_sosial", arguments: user['id']);
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -257,7 +257,7 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_karir", arguments: user['id'].toString());
+                                    context, "/bimbingan_karir", arguments: user['id']);
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),

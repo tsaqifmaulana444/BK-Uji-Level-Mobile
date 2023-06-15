@@ -65,7 +65,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           color: const Color(0xFF000000),
                           iconSize: 24,
                           onPressed: () {
-                            Navigator.pushNamed(context, "/bimbingan_pribadi");
+                            Navigator.pushNamed(context, "/bimbingan_pribadi", arguments: bimbinganPribadiData["data"][0]["siswa"]["id"]);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         ),

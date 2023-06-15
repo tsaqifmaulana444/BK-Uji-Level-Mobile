@@ -11,17 +11,20 @@ class Bimbingan_Pribadi extends StatefulWidget {
 
 class _Bimbingan_PribadiState extends State<Bimbingan_Pribadi> {
   List<dynamic> bimbinganPribadiData = [];
+  int user = 0;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    user = ModalRoute.of(context)!.settings.arguments as int;
+    print(user);
     fetchData();
   }
 
   Future<void> fetchData() async {
     // user = ModalRoute.of(context)?.settings.arguments as Map;
     final response = await http.get(Uri.parse(
-        'https://3621-117-102-67-66.ngrok-free.app/api/bimbingan_pribadi/1'));
+        'https://3621-117-102-67-66.ngrok-free.app/api/bimbingan_pribadi/$user'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -56,7 +59,8 @@ class _Bimbingan_PribadiState extends State<Bimbingan_Pribadi> {
                           color: const Color(0xFF000000),
                           iconSize: 24,
                           onPressed: () {
-                            Navigator.pushNamed(context, "/home");
+                            Navigator.pop(
+                                context); // Navigate back to the previous screen
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         ),
