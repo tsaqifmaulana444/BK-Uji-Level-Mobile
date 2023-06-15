@@ -19,13 +19,12 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     bimbinganPribadiId = ModalRoute.of(context)!.settings.arguments as int;
-    print(bimbinganPribadiId);
     fetchData();
   }
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://fbb7-117-102-67-66.ngrok-free.app/api/detail_bimbingan_pribadi/$bimbinganPribadiId'));
+        'https://e434-103-144-175-177.ngrok-free.app/api/detail_bimbingan_pribadi/$bimbinganPribadiId'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -65,7 +64,9 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           color: const Color(0xFF000000),
                           iconSize: 24,
                           onPressed: () {
-                            Navigator.pushNamed(context, "/bimbingan_pribadi", arguments: bimbinganPribadiData["data"][0]["siswa"]["id"]);
+                            Navigator.pushNamed(context, "/bimbingan_pribadi",
+                                arguments: bimbinganPribadiData["data"][0]
+                                    ["siswa"]["id"]);
                           },
                           icon: const Icon(Icons.arrow_back_ios_new_rounded),
                         ),
@@ -92,8 +93,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           "Nama Siswa",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganPribadiData["data"][0]["siswa"]["name"]
-                            .toString()),
+                        Text(bimbinganPribadiData["data"]?[0]?["siswa"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -107,8 +107,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           "Guru BK",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganPribadiData["data"][0]["guru"]["name"]
-                            .toString()),
+                        Text(bimbinganPribadiData["data"]?[0]?["guru"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -122,8 +121,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           "Wali Kelas",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganPribadiData["data"][0]["walas"]["name"]
-                            .toString()),
+                        Text(bimbinganPribadiData["data"]?[0]?["walas"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -137,8 +135,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           "Kelas",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganPribadiData["data"][0]["kelas"]["name"]
-                            .toString()),
+                        Text(bimbinganPribadiData["data"]?[0]?["kelas"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -153,7 +150,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                            "${bimbinganPribadiData["data"][0]["lokasi_pertemuan"].toString()}, ${bimbinganPribadiData["data"][0]["tanggal_pertemuan"].toString()}"),
+                            "${bimbinganPribadiData["data"]?[0]?["lokasi_pertemuan"]?.toString() ?? ""}, ${bimbinganPribadiData["data"]?[0]?["tanggal_pertemuan"]?.toString() ?? ""}"),
                       ],
                     ),
                   ),
@@ -183,9 +180,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
-                                  child: Text(bimbinganPribadiData["data"][0]
-                                          ["alasan_pertemuan"]
-                                      .toString()),
+                                  child: Text(bimbinganPribadiData["data"]?[0]?["alasan_pertemuan"]?.toString() ?? ""),
                                 ),
                               ],
                             ),
@@ -220,9 +215,7 @@ class _Bimbingan_Pribadi_DetailsState extends State<Bimbingan_Pribadi_Details> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 15),
-                                  child: Text(bimbinganPribadiData["data"][0]
-                                          ["alasan_guru"]
-                                      .toString()),
+                                  child: Text(bimbinganPribadiData["data"]?[0]?["alasan_guru"]?.toString() ?? ""),
                                 ),
                               ],
                             ),

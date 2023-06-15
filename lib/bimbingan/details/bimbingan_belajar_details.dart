@@ -19,13 +19,12 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     bimbinganId = ModalRoute.of(context)!.settings.arguments as int;
-    print(bimbinganId);
     fetchData();
   }
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://fbb7-117-102-67-66.ngrok-free.app/api/detail_bimbingan_belajar/$bimbinganId'));
+        'https://e434-103-144-175-177.ngrok-free.app/api/detail_bimbingan_belajar/$bimbinganId'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -92,7 +91,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                           "Nama Siswa",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganData["data"][0]["siswa"]["name"].toString()),
+                        Text(bimbinganData["data"]?[0]?["siswa"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -106,7 +105,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                           "Guru BK",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganData["data"][0]["guru"]["name"].toString()),
+                        Text(bimbinganData["data"]?[0]?["guru"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -120,7 +119,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                           "Wali Kelas",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganData["data"][0]["walas"]["name"].toString()),
+                        Text(bimbinganData["data"]?[0]?["walas"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -134,7 +133,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                           "Kelas",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(bimbinganData["data"][0]["kelas"]["name"].toString()),
+                        Text(bimbinganData["data"]?[0]?["kelas"]?["name"]?.toString() ?? ""),
                       ],
                     ),
                   ),
@@ -148,7 +147,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                           "Tempat & Tanggal",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("${bimbinganData["data"][0]["lokasi_pertemuan"].toString()}, ${bimbinganData["data"][0]["tanggal_pertemuan"].toString()}"),
+                        Text("${bimbinganData["data"]?[0]?["lokasi_pertemuan"]?.toString() ?? ""}, ${bimbinganData["data"]?[0]?["tanggal_pertemuan"]?.toString() ?? ""}"),
                       ],
                     ),
                   ),
@@ -177,7 +176,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Text(bimbinganData["data"][0]["alasan_pertemuan"].toString()),
+                                  child: Text(bimbinganData["data"]?[0]?["alasan_pertemuan"]?.toString() ?? ""),
                                 ),
                               ],
                             ),
@@ -211,7 +210,7 @@ class _Bimbingan_Belajar_DetailsState extends State<Bimbingan_Belajar_Details> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Text(bimbinganData["data"][0]["alasan_guru"].toString()),
+                                  child: Text(bimbinganData["data"]?[0]?["alasan_guru"]?.toString() ?? ""),
                                 ),
                               ],
                             ),

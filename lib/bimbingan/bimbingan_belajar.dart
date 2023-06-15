@@ -23,7 +23,7 @@ class _Bimbingan_BelajarState extends State<Bimbingan_Belajar> {
 
   Future<void> fetchData() async {
     final response = await http.get(Uri.parse(
-        'https://fbb7-117-102-67-66.ngrok-free.app/api/bimbingan_belajar/$user'));
+        'https://e434-103-144-175-177.ngrok-free.app/api/bimbingan_belajar/$user'));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
@@ -54,8 +54,11 @@ class _Bimbingan_BelajarState extends State<Bimbingan_Belajar> {
                       color: const Color(0xFF000000),
                       iconSize: 24,
                       onPressed: () {
-                        Navigator.pop(
-                            context); // Navigate back to the previous screen
+                        Navigator.pushReplacementNamed(
+                          context,
+                          "/home",
+                          arguments: {'id': user},
+                        );
                       },
                       icon: const Icon(Icons.arrow_back_ios_new_rounded),
                     ),

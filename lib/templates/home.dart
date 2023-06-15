@@ -165,7 +165,7 @@ class _HomeState extends State<Home> {
                           Row(children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
+                                Navigator.pushReplacementNamed(
                                   context,
                                   "/bimbingan_pribadi",
                                   arguments: user['id'],
@@ -179,28 +179,31 @@ class _HomeState extends State<Home> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Column(children: [
-                                  Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0, 20, 0, 25),
-                                      width: 60,
-                                      height: 60,
-                                      child: Image.asset(
-                                          "assets/communication.png")),
-                                  const SizedBox(height: 5),
-                                  const Text("Bimbingan Pribadi",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold))
-                                ]),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 20, 0, 25),
+                                        width: 60,
+                                        height: 60,
+                                        child: Image.asset(
+                                            "assets/communication.png")),
+                                    const SizedBox(height: 5),
+                                    const Text("Bimbingan Pribadi",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold))
+                                  ],
+                                ),
                               ),
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
+                                Navigator.pushReplacementNamed(
                                   context,
                                   "/bimbingan_belajar",
-                                  arguments: user['id']);
+                                  arguments: user['id'],
+                                );
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -227,8 +230,11 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, "/bimbingan_sosial", arguments: user['id']);
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/bimbingan_sosial",
+                                  arguments: user['id'],
+                                );
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -256,8 +262,11 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, "/bimbingan_karir", arguments: user['id']);
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/bimbingan_karir",
+                                  arguments: user['id'],
+                                );
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
