@@ -15,9 +15,9 @@ class _LoginState extends State<Login> {
   String _password = '';
   String token = '';
 
-
   Future<void> _login() async {
-    final url = Uri.parse('http://127.0.0.1:8000/api/login'); // Replace with your API endpoint
+    final url = Uri.parse(
+        'https://3621-117-102-67-66.ngrok-free.app/api/login'); // Replace with your API endpoint
     final response = await http.post(
       url,
       body: {
@@ -29,9 +29,15 @@ class _LoginState extends State<Login> {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       final token = responseData['token'];
+      final user = responseData['user'];
       // Perform necessary actions with the token (e.g., save it to local storage)
 
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(
+        context,
+        "/home",
+        arguments: user,
+      );
+      // Navigator.pushNamed(context, '/home');
     } else {
       // Login failed
       print('Login failed');
@@ -55,7 +61,7 @@ class _LoginState extends State<Login> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(25, 70, 0, 0),
                     width: 105,
-                    child: Image.asset("assets/logo.png"),
+                    child: Image.asset("assets/logo2.png"),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(25, 20, 25, 0),
@@ -146,10 +152,12 @@ class _LoginState extends State<Login> {
                                 }
                               },
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
                                   const Color(0xFFcb0c9f),
                                 ),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
                                   const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(12),
@@ -173,3 +181,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+

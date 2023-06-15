@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Bimbingan_Belajar extends StatefulWidget {
   const Bimbingan_Belajar({super.key});
@@ -8,6 +10,27 @@ class Bimbingan_Belajar extends StatefulWidget {
 }
 
 class _Bimbingan_BelajarState extends State<Bimbingan_Belajar> {
+  List<dynamic> bimbinganPribadiData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse('https://3621-117-102-67-66.ngrok-free.app/api/bimbingan_belajar/1'));
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      setState(() {
+        bimbinganPribadiData = responseData['data'];
+      });
+    } else {
+      // Handle error
+      print('Failed to fetch data');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,83 +62,90 @@ class _Bimbingan_BelajarState extends State<Bimbingan_Belajar> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                width: double.infinity,
-                color: Colors.transparent,
-                height: 300,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          color: Colors.white,
-                        ),
-                        width: double.infinity,
-                        margin: const EdgeInsets.fromLTRB(0, 6, 0, 6),
-                        height: 120,
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 200,
-                                    margin: const EdgeInsets.only(top: 5),
-                                    child: const Text(
-                                      "Konsultasi 1",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
+                    margin: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    height: 300,
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      children: bimbinganPribadiData.map((item) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(18),
+                            color: Colors.white,
+                          ),
+                          width: double.infinity,
+                          margin: const EdgeInsets.fromLTRB(0, 6, 0, 6),
+                          height: 120,
+                          child: Row(
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 200,
+                                      margin: const EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        item['alasan_pertemuan'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 18),
-                                    child: const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Text("Guru BK"),
-                                        Text(
-                                          "Abhiram Aditya S.Pd",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 18),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Nama : ${item['siswa']['name']}",
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  const Text("2001-9-11")
-                                ],
+                                    Text("Tanggal : ${item['tanggal_pertemuan']}"),
+                                    Text("Status : ${item['status']}"),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.only(right: 15),
-                              child: TextButton(
+                              const Spacer(),
+                              Container(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: TextButton(
                                   onPressed: () {
                                     Navigator.pushNamed(
-                                        context, "/bimbingan_belajar/details");
+                                      context,
+                                      "/bimbingan_belajar/details",
+                                      arguments: item['id'],
+                                    );
                                   },
                                   style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              const Color(0xFFcb0c9f))),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            const Color(0xFFcb0c9f)),
+                                  ),
                                   child: const Text(
                                     "Detail",
                                     style: TextStyle(
                                       color: Color.fromARGB(255, 255, 255, 255),
                                       fontSize: 15,
                                     ),
-                                  )),
-                            )
-                          ],
-                        )),
-                  ],
-                ),
-              )
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
             ]),
           )
         ],

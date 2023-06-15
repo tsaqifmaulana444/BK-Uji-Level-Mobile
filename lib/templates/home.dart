@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> fetchData(String token) async {
-    print(token); // Print the token
     final url = Uri.parse(
         'http://127.0.0.1:8000/api/data'); // Replace with your API endpoint
 
@@ -41,6 +40,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ModalRoute.of(context)?.settings.arguments as Map;
+    print(user['id'].toString());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
                 //welcome card
                 Container(
                   width: double.infinity,
-                  margin: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+                  margin: const EdgeInsets.fromLTRB(20, 25, 20, 10),
                   height: 140,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -126,11 +127,10 @@ class _HomeState extends State<Home> {
                                 child: const Text(
                                   "Kunjungi Website",
                                   style: TextStyle(
-                                    color: Color(0xFFcb0c9f),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold
-                                    ),
-                                  ),
+                                      color: Color(0xFFcb0c9f),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ],
                           )
@@ -166,7 +166,10 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_pribadi");
+                                  context,
+                                  "/bimbingan_pribadi",
+                                  arguments: user['id'].toString(),
+                                );
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -195,7 +198,9 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_belajar");
+                                  context,
+                                  "/bimbingan_belajar",
+                                  arguments: user['id'].toString());
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -223,7 +228,7 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_sosial");
+                                    context, "/bimbingan_sosial", arguments: user['id'].toString());
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -252,7 +257,7 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, "/bimbingan_karir");
+                                    context, "/bimbingan_karir", arguments: user['id'].toString());
                               },
                               child: Container(
                                 margin: const EdgeInsets.fromLTRB(0, 0, 15, 0),

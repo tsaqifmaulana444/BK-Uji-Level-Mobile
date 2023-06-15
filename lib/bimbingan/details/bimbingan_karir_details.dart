@@ -1,14 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Bimbingan_Karir_Details extends StatefulWidget {
-  const Bimbingan_Karir_Details({super.key});
+  const Bimbingan_Karir_Details({Key? key}) : super(key: key);
 
   @override
-  State<Bimbingan_Karir_Details> createState() => _Bimbingan_Karir_DetailsState();
+  _Bimbingan_Karir_DetailsState createState() =>
+      _Bimbingan_Karir_DetailsState();
 }
 
 class _Bimbingan_Karir_DetailsState extends State<Bimbingan_Karir_Details> {
+  int bimbinganId = 0;
   int selectedIndex = 0;
+  Map<String, dynamic> bimbinganData = {};
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    bimbinganId = ModalRoute.of(context)!.settings.arguments as int;
+    print(bimbinganId);
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse(
+        'https://3621-117-102-67-66.ngrok-free.app/api/detail_bimbingan_karir/$bimbinganId'));
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      if (responseData is List<dynamic> && responseData.isNotEmpty) {
+        setState(() {
+          bimbinganData = responseData as Map<String, dynamic>;
+        });
+      } else {
+        setState(() {
+          bimbinganData = responseData as Map<String, dynamic>;
+        });
+       
+      }
+    } else {
+      // Handle error
+      print('Failed to fetch data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,74 +63,107 @@ class _Bimbingan_Karir_DetailsState extends State<Bimbingan_Karir_Details> {
                     child: Row(
                       children: [
                         IconButton(
-                            color: const Color(0xFF000000),
-                            iconSize: 24,
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/bimbingan_karir");
-                            },
-                            icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+                          color: const Color(0xFF000000),
+                          iconSize: 24,
+                          onPressed: () {
+                            Navigator.pushNamed(context, "/bimbingan_karir");
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                        ),
                         const SizedBox(
                           width: 9,
                         ),
-                        const Text("Detail Bimbingan Karir",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold))
+                        const Text(
+                          "Detail Bimbingan Karir",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(top: 15),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Nama Siswa",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("Pradu Singh"),
+                        Text(bimbinganData["data"][0]["siswa"]["name"].toString()),
                       ],
                     ),
                   ),
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(top: 15),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
+                          "Guru BK",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(bimbinganData["data"][0]["guru"]["name"].toString()),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Wali Kelas",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(bimbinganData["data"][0]["walas"]["name"].toString()),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
                           "Kelas",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("XI IPA 1"),
+                        Text(bimbinganData["data"][0]["kelas"]["name"].toString()),
                       ],
                     ),
                   ),
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(top: 15),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
+                          "Tipe Bimbingan",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(bimbinganData["data"][0]["tipe_bimbingan"].toString()),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
                           "Tempat & Tanggal",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text("SMK Penerus Petrus, 2001-9-11"),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(top: 15),
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Jam",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text("08.10 WIB"),
+                        Text("${bimbinganData["data"][0]["lokasi_pertemuan"].toString()}, ${bimbinganData["data"][0]["tanggal_pertemuan"].toString()}"),
                       ],
                     ),
                   ),
@@ -111,26 +179,25 @@ class _Bimbingan_Karir_DetailsState extends State<Bimbingan_Karir_Details> {
                         ),
                         const SizedBox(height: 7),
                         Container(
-                            width: double.infinity,
-                            height: 110,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
+                          width: double.infinity,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Text(bimbinganData["data"][0]["alasan_pertemuan"].toString()),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                children: const [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
-                                    child: Text(
-                                        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis "),
-                                  ),
-                                ],
-                              ),
-                            ))
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -141,43 +208,39 @@ class _Bimbingan_Karir_DetailsState extends State<Bimbingan_Karir_Details> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Tindak Lanjut",
+                          "Tanggapan Guru",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 7),
                         Container(
-                            width: double.infinity,
-                            height: 110,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white,
+                          width: double.infinity,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Text(bimbinganData["data"][0]["alasan_guru"].toString()),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: ListView(
-                                scrollDirection: Axis.vertical,
-                                children: const [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 15),
-                                    child: Text(
-                                        "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis "),
-                                  ),
-                                ],
-                              ),
-                            ))
+                          ),
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ]),
-              )
+              ),
             ],
           ),
         ),
-        
       ),
     );
   }
 }
-
-// tema, nama siswa, kelas, tanggal guru, jam, tempat,alasan, tindak lanjut
