@@ -88,7 +88,7 @@ class _HomeState extends State<Home> {
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsets.fromLTRB(20, 25, 20, 10),
-                  height: 140,
+                  height: 150,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     gradient: LinearGradient(
