@@ -1,23 +1,25 @@
-import 'package:bk_uji_level_remake/bimbingan/bimbingan_pribadi.dart';
+import 'package:bk_uji_level_remake/bimbingan/bimbingan_karir.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FormBimbinganPribadi extends StatefulWidget {
+class FormBimbinganKarir extends StatefulWidget {
   final Map<String, dynamic> user;
-  const FormBimbinganPribadi({required this.user, Key? key}) : super(key: key);
+  const FormBimbinganKarir({required this.user, Key? key}) : super(key: key);
 
   @override
-  State<FormBimbinganPribadi> createState() => _FormBimbinganPribadiState();
+  State<FormBimbinganKarir> createState() => _FormBimbinganKarirState();
 }
 
-class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
+class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
   final _formKey = GlobalKey<FormState>();
   final _guruIdController = TextEditingController();
   final _walasIdController = TextEditingController();
   final _alasanPertemuanController = TextEditingController();
   final _tanggalPertemuanController = TextEditingController();
   final _lokasiPertemuanController = TextEditingController();
+  final _tipeController = TextEditingController();
 
   @override
   void dispose() {
@@ -26,6 +28,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
     _alasanPertemuanController.dispose();
     _tanggalPertemuanController.dispose();
     _lokasiPertemuanController.dispose();
+    _tipeController.dispose();
     super.dispose();
   }
 
@@ -36,13 +39,14 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
         'guru_id': _guruIdController.text,
         'walas_id': _walasIdController.text,
         'kelas_id': widget.user["kelas_id"],
+        'tipe_bimbingan': _tipeController.text,
         'alasan_pertemuan': _alasanPertemuanController.text,
         'tanggal_pertemuan': _tanggalPertemuanController.text,
         'lokasi_pertemuan': _lokasiPertemuanController.text,
       };
 
       final response = await http.post(
-        Uri.parse("http://localhost:8000/api/tambah_bimbingan_pribadi"),
+        Uri.parse("http://localhost:8000/api/tambah_bimbingan_karir"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(requestData),
       );
@@ -61,6 +65,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
         _alasanPertemuanController.clear();
         _tanggalPertemuanController.clear();
         _lokasiPertemuanController.clear();
+        _tipeController.clear();
       } else {
         // Jika terjadi kesalahan saat menambahkan data, Anda dapat menambahkan penanganan kesalahan di sini
         ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +73,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
             content: Text("Gagal menambahkan data"),
           ),
         );
+        print(response.statusCode);
       }
     }
   }
@@ -91,12 +97,12 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BimbinganPribadi(user: widget.user)),
+                                BimbinganKarir(user: widget.user)),
                       );
                     },
                   ),
                   const Text(
-                    "Tambah Bimbingan Pribadi",
+                    "Tambah Bimbingan Karir",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],
@@ -157,6 +163,17 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Lokasi Pertemuan tidak boleh kosong";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: _tipeController,
+                      decoration: const InputDecoration(labelText: "Tipe Bimbingan"),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Tipe Bimbingan tidak boleh kosong";
                         }
                         return null;
                       },

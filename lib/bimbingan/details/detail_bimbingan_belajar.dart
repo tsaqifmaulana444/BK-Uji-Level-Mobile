@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../bimbingan_pribadi.dart';
+import '../bimbingan_belajar.dart';
 
-class DetailBimbinganPribadi extends StatefulWidget {
+class DetailBimbinganBelajar extends StatefulWidget {
   final Map<String, dynamic> bimbinganData, user;
 
-  const DetailBimbinganPribadi({
+  const DetailBimbinganBelajar({
     required this.bimbinganData,
     required this.user,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<DetailBimbinganPribadi> createState() => _DetailBimbinganPribadiState();
+  State<DetailBimbinganBelajar> createState() => _DetailBimbinganBelajarState();
 }
 
-class _DetailBimbinganPribadiState extends State<DetailBimbinganPribadi> {
+class _DetailBimbinganBelajarState extends State<DetailBimbinganBelajar> {
   // Helper method to handle null values and return an empty string
   String _nullSafeText(dynamic value) {
     return value?.toString() ?? "";
@@ -40,13 +40,13 @@ class _DetailBimbinganPribadiState extends State<DetailBimbinganPribadi> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BimbinganPribadi(user: widget.user),
+                            builder: (context) => BimbinganBelajar(user: widget.user),
                           ),
                         );
                       },
                     ),
                     const Text(
-                      "Detail Bimbingan Pribadi",
+                      "Detail Bimbingan Belajar",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ],

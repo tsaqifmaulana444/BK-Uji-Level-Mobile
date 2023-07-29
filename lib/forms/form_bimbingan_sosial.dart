@@ -1,23 +1,25 @@
-import 'package:bk_uji_level_remake/bimbingan/bimbingan_pribadi.dart';
+import 'package:bk_uji_level_remake/bimbingan/bimbingan_sosial.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FormBimbinganPribadi extends StatefulWidget {
+class FormBimbinganSosial extends StatefulWidget {
   final Map<String, dynamic> user;
-  const FormBimbinganPribadi({required this.user, Key? key}) : super(key: key);
+  const FormBimbinganSosial({required this.user, Key? key}) : super(key: key);
 
   @override
-  State<FormBimbinganPribadi> createState() => _FormBimbinganPribadiState();
+  State<FormBimbinganSosial> createState() => _FormBimbinganSosialState();
 }
 
-class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
+class _FormBimbinganSosialState extends State<FormBimbinganSosial> {
   final _formKey = GlobalKey<FormState>();
   final _guruIdController = TextEditingController();
   final _walasIdController = TextEditingController();
   final _alasanPertemuanController = TextEditingController();
   final _tanggalPertemuanController = TextEditingController();
   final _lokasiPertemuanController = TextEditingController();
+  final _diajukanController = TextEditingController();
 
   @override
   void dispose() {
@@ -26,6 +28,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
     _alasanPertemuanController.dispose();
     _tanggalPertemuanController.dispose();
     _lokasiPertemuanController.dispose();
+    _diajukanController.dispose();
     super.dispose();
   }
 
@@ -39,10 +42,11 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
         'alasan_pertemuan': _alasanPertemuanController.text,
         'tanggal_pertemuan': _tanggalPertemuanController.text,
         'lokasi_pertemuan': _lokasiPertemuanController.text,
+        'diajukan': _diajukanController.text,
       };
 
       final response = await http.post(
-        Uri.parse("http://localhost:8000/api/tambah_bimbingan_pribadi"),
+        Uri.parse("http://localhost:8000/api/tambah_bimbingan_sosial"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(requestData),
       );
@@ -61,6 +65,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
         _alasanPertemuanController.clear();
         _tanggalPertemuanController.clear();
         _lokasiPertemuanController.clear();
+        _diajukanController.clear();
       } else {
         // Jika terjadi kesalahan saat menambahkan data, Anda dapat menambahkan penanganan kesalahan di sini
         ScaffoldMessenger.of(context).showSnackBar(
@@ -91,12 +96,12 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BimbinganPribadi(user: widget.user)),
+                                BimbinganSosial(user: widget.user)),
                       );
                     },
                   ),
                   const Text(
-                    "Tambah Bimbingan Pribadi",
+                    "Tambah Bimbingan Sosial",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],
@@ -157,6 +162,17 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Lokasi Pertemuan tidak boleh kosong";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      controller: _diajukanController,
+                      decoration: const InputDecoration(labelText: "Orang Yang Bersangkutan"),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Orang Yang Bersangkutan tidak boleh kosong";
                         }
                         return null;
                       },

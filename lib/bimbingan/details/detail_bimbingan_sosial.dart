@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 import '../bimbingan_pribadi.dart';
+import '../bimbingan_sosial.dart';
 
-class DetailBimbinganPribadi extends StatefulWidget {
+class DetailBimbinganSosial extends StatefulWidget {
   final Map<String, dynamic> bimbinganData, user;
 
-  const DetailBimbinganPribadi({
+  const DetailBimbinganSosial({
     required this.bimbinganData,
     required this.user,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<DetailBimbinganPribadi> createState() => _DetailBimbinganPribadiState();
+  State<DetailBimbinganSosial> createState() => _DetailBimbinganSosialState();
 }
 
-class _DetailBimbinganPribadiState extends State<DetailBimbinganPribadi> {
+class _DetailBimbinganSosialState extends State<DetailBimbinganSosial> {
   // Helper method to handle null values and return an empty string
   String _nullSafeText(dynamic value) {
     return value?.toString() ?? "";
@@ -40,13 +41,13 @@ class _DetailBimbinganPribadiState extends State<DetailBimbinganPribadi> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BimbinganPribadi(user: widget.user),
+                            builder: (context) => BimbinganSosial(user: widget.user),
                           ),
                         );
                       },
                     ),
                     const Text(
-                      "Detail Bimbingan Pribadi",
+                      "Detail Bimbingan Sosial",
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                   ],
@@ -103,6 +104,13 @@ class _DetailBimbinganPribadiState extends State<DetailBimbinganPribadi> {
                       ),
                       const SizedBox(height: 8),
                       Text(_nullSafeText(widget.bimbinganData['siswa']['name'])),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Orang Yang Bersangkutan',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(_nullSafeText(widget.bimbinganData['diajukan'].toString())),
                       const SizedBox(height: 20),
                       const Text(
                         'Kelas Siswa',

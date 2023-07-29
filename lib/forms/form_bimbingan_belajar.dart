@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FormBimbinganPribadi extends StatefulWidget {
+import '../bimbingan/bimbingan_belajar.dart';
+
+class FormBimbinganBelajar extends StatefulWidget {
   final Map<String, dynamic> user;
-  const FormBimbinganPribadi({required this.user, Key? key}) : super(key: key);
+  const FormBimbinganBelajar({required this.user, Key? key}) : super(key: key);
 
   @override
-  State<FormBimbinganPribadi> createState() => _FormBimbinganPribadiState();
+  State<FormBimbinganBelajar> createState() => _FormBimbinganBelajarState();
 }
 
-class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
+class _FormBimbinganBelajarState extends State<FormBimbinganBelajar> {
   final _formKey = GlobalKey<FormState>();
   final _guruIdController = TextEditingController();
   final _walasIdController = TextEditingController();
@@ -42,7 +44,7 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
       };
 
       final response = await http.post(
-        Uri.parse("http://localhost:8000/api/tambah_bimbingan_pribadi"),
+        Uri.parse("http://localhost:8000/api/tambah_bimbingan_belajar"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(requestData),
       );
@@ -91,12 +93,12 @@ class _FormBimbinganPribadiState extends State<FormBimbinganPribadi> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                BimbinganPribadi(user: widget.user)),
+                                BimbinganBelajar(user: widget.user)),
                       );
                     },
                   ),
                   const Text(
-                    "Tambah Bimbingan Pribadi",
+                    "Tambah Bimbingan Belajar",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   )
                 ],

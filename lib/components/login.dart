@@ -4,13 +4,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   _LoginState createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _login() async {
     String username = _usernameController.text.trim();
@@ -44,7 +46,6 @@ class _LoginState extends State<Login> {
           print('Login successful! Token: $token');
           print(user);
 
-
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => Home(user: user)),
@@ -62,25 +63,41 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const FlutterLogo(
-                size: 100.0,
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      "assets/login.png",
+                      width: 280,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  const Text(
+                    "Login Untuk Melanjutkan",
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  _buildUsernameField(),
+                  const SizedBox(height: 5.0),
+                  _buildPasswordField(),
+                  const SizedBox(height: 30.0),
+                  _buildLoginButton(),
+                ],
               ),
-              const SizedBox(height: 20.0),
-              _buildUsernameField(),
-              const SizedBox(height: 20.0),
-              _buildPasswordField(),
-              const SizedBox(height: 20.0),
-              _buildLoginButton(),
-            ],
+            ),
           ),
-        ),
-      ),
+        ],
+      )
     );
   }
 
@@ -89,7 +106,10 @@ class _LoginState extends State<Login> {
       controller: _usernameController,
       decoration: const InputDecoration(
         labelText: "Username",
-        border: OutlineInputBorder(),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        prefixIcon: Icon(Icons.person_2_rounded), // Ikonya ada di sebelah kiri form
       ),
     );
   }
@@ -100,25 +120,33 @@ class _LoginState extends State<Login> {
       obscureText: true,
       decoration: const InputDecoration(
         labelText: "Password",
-        border: OutlineInputBorder(),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey),
+        ),
+        prefixIcon: Icon(Icons.lock_outline_rounded),// Ikonya ada di sebelah kiri form
       ),
     );
   }
 
   Widget _buildLoginButton() {
-    return ElevatedButton(
-      onPressed: () {
-        if (_usernameController.text.trim().isEmpty ||
-            _passwordController.text.trim().isEmpty) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Please fill in both fields")),
-          );
-        } else {
-          _login();
-        }
-      },
-      child: const Text("Login"),
+    return Container(
+      width: double.infinity,
+      height: 40,
+      margin: const EdgeInsets.symmetric(horizontal: 10.0),// Memberikan margin horizontal
+      child: ElevatedButton(
+        onPressed: () {
+          if (_usernameController.text.trim().isEmpty ||
+              _passwordController.text.trim().isEmpty) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Please fill in both fields")),
+            );
+          } else {
+            _login();
+          }
+        },
+        child: const Text("Login"),
+      ),
     );
   }
 }
