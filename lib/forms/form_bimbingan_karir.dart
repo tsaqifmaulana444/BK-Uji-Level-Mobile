@@ -1,5 +1,4 @@
 import 'package:bk_uji_level_remake/bimbingan/bimbingan_karir.dart';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -14,21 +13,76 @@ class FormBimbinganKarir extends StatefulWidget {
 
 class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
   final _formKey = GlobalKey<FormState>();
-  final _guruIdController = TextEditingController();
-  final _walasIdController = TextEditingController();
   final _alasanPertemuanController = TextEditingController();
   final _tanggalPertemuanController = TextEditingController();
   final _lokasiPertemuanController = TextEditingController();
-  final _tipeController = TextEditingController();
+  final _tipePertemuanController = TextEditingController();
+
+
+  List<Map<String, dynamic>> _guruData = [];
+  List<Map<String, dynamic>> _walasData = [];
+
+  String? _selectedGuruId;
+  String? _selectedWalasId;
+
+
+  @override
+  void initState() {
+    _fetchGuruData();
+    _fetchWalasData();
+    super.initState();
+  }
+
+  // Method to fetch guru data from the API
+  Future<void> _fetchGuruData() async {
+    try {
+      final response = await http.get(
+        Uri.parse("http://localhost:8000/api/get_guru"),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _guruData = List<Map<String, dynamic>>.from(json.decode(response.body)["data"]);
+        });
+      } else {
+        // Handle API error here
+        print("Error: ${response.statusCode} - ${response.body}");
+      }
+    } catch (e) {
+      // Handle other exceptions
+      print("Error: $e");
+    }
+  }
+
+  Future<void> _fetchWalasData() async {
+    try {
+      final response = await http.get(
+        Uri.parse("http://localhost:8000/api/get_walas"),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          _walasData = List<Map<String, dynamic>>.from(json.decode(response.body)["data"]);
+        });
+      } else {
+        // Handle API error here
+        print("Error: ${response.statusCode} - ${response.body}");
+      }
+    } catch (e) {
+      // Handle other exceptions
+      print("Error: $e");
+    }
+  }
 
   @override
   void dispose() {
-    _guruIdController.dispose();
-    _walasIdController.dispose();
     _alasanPertemuanController.dispose();
     _tanggalPertemuanController.dispose();
     _lokasiPertemuanController.dispose();
-    _tipeController.dispose();
+    _tipePertemuanController.dispose();
+
     super.dispose();
   }
 
@@ -36,20 +90,27 @@ class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
     if (_formKey.currentState!.validate()) {
       final Map<String, dynamic> requestData = {
         'siswa_id': widget.user["id"],
-        'guru_id': _guruIdController.text,
-        'walas_id': _walasIdController.text,
+        'guru_id': _selectedGuruId ?? '',
+        'walas_id': _selectedWalasId ?? '',
         'kelas_id': widget.user["kelas_id"],
-        'tipe_bimbingan': _tipeController.text,
         'alasan_pertemuan': _alasanPertemuanController.text,
         'tanggal_pertemuan': _tanggalPertemuanController.text,
         'lokasi_pertemuan': _lokasiPertemuanController.text,
+        'tipe_bimbingan': _tipePertemuanController.text,
+
       };
+
+      print('requestData: $requestData');
 
       final response = await http.post(
         Uri.parse("http://localhost:8000/api/tambah_bimbingan_karir"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(requestData),
       );
+
+      print('Response Status Code: ${response.statusCode}');
+
+      // Rest of your code...
 
       if (response.statusCode == 200) {
         // Data berhasil ditambahkan
@@ -59,13 +120,11 @@ class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
           ),
         );
 
-        // Bersihkan form setelah data berhasil ditambahkan
-        _guruIdController.clear();
-        _walasIdController.clear();
         _alasanPertemuanController.clear();
         _tanggalPertemuanController.clear();
         _lokasiPertemuanController.clear();
-        _tipeController.clear();
+        _tipePertemuanController.clear();
+
       } else {
         // Jika terjadi kesalahan saat menambahkan data, Anda dapat menambahkan penanganan kesalahan di sini
         ScaffoldMessenger.of(context).showSnackBar(
@@ -73,7 +132,6 @@ class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
             content: Text("Gagal menambahkan data"),
           ),
         );
-        print(response.statusCode);
       }
     }
   }
@@ -83,114 +141,140 @@ class _FormBimbinganKarirState extends State<FormBimbinganKarir> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                BimbinganKarir(user: widget.user)),
-                      );
-                    },
-                  ),
-                  const Text(
-                    "Tambah Bimbingan Karir",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  )
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    const SizedBox(height: 40),
-                    TextFormField(
-                      controller: _guruIdController,
-                      decoration: const InputDecoration(labelText: "Guru ID"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Guru ID tidak boleh kosong";
-                        }
-                        return null;
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  BimbinganKarir(user: widget.user)),
+                        );
                       },
                     ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _walasIdController,
-                      decoration: const InputDecoration(labelText: "Walas ID"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Walas ID tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _alasanPertemuanController,
-                      decoration: const InputDecoration(labelText: "Alasan Pertemuan"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Alasan Pertemuan tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _tanggalPertemuanController,
-                      decoration: const InputDecoration(labelText: "Tanggal Pertemuan"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Tanggal Pertemuan tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _lokasiPertemuanController,
-                      decoration: const InputDecoration(labelText: "Lokasi Pertemuan"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Lokasi Pertemuan tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _tipeController,
-                      decoration: const InputDecoration(labelText: "Tipe Bimbingan"),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Tipe Bimbingan tidak boleh kosong";
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: _submitForm,
-                        child: const Text("Submit"),
-                      ),
-                    ),
+                    const Text(
+                      "Tambah Bimbingan Karir",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    )
                   ],
                 ),
-              ),
-            ],
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 40),
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: "Guru BK"),
+                        value: _selectedGuruId,
+                        items: _guruData.map((guru) {
+                          return DropdownMenuItem<String>(
+                            value: guru["id"].toString(),
+                            child: Text(guru["name"]),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedGuruId = newValue;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Guru ID tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(labelText: "Wali Kelas"),
+                        value: _selectedWalasId,
+                        items: _walasData.map((walas) {
+                          return DropdownMenuItem<String>(
+                            value: walas["id"].toString(),
+                            child: Text(walas["name"]),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedWalasId = newValue;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Walas tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _alasanPertemuanController,
+                        decoration: const InputDecoration(labelText: "Alasan Pertemuan"),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Alasan Pertemuan tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _tanggalPertemuanController,
+                        decoration: const InputDecoration(labelText: "Tanggal Pertemuan"),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Tanggal Pertemuan tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _lokasiPertemuanController,
+                        decoration: const InputDecoration(labelText: "Lokasi Pertemuan"),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Lokasi Pertemuan tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _tipePertemuanController,
+                        decoration: const InputDecoration(labelText: "Tipe Pertemuan"),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Tipe pertemuan tidak boleh kosong";
+                          }
+                          return null;
+                        },
+                      ),
+
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: _submitForm,
+                          child: const Text("Submit"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
