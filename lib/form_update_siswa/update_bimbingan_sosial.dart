@@ -1,9 +1,9 @@
-import 'package:bk_uji_level_remake/bimbingan/bimbingan_sosial.dart';
+import 'package:bk_uji_level_remake/bimbingan_siswa/bimbingan_sosial.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../bimbingan/bimbingan_pribadi.dart';
+import '../bimbingan_siswa/bimbingan_pribadi.dart';
 
 class UpdateBimbinganSosial extends StatefulWidget {
   final Map<String, dynamic> bimbinganData;

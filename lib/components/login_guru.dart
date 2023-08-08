@@ -1,16 +1,17 @@
 import 'package:bk_uji_level_remake/components/home.dart';
+import 'package:bk_uji_level_remake/components/home_guru.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginGuru extends StatefulWidget {
+  const LoginGuru({super.key});
 
   @override
-  _LoginState createState() => _LoginState();
+  _LoginGuruState createState() => _LoginGuruState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginGuruState extends State<LoginGuru> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
 
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => Home(user: user)),
+            MaterialPageRoute(builder: (context) => HomeGuru(user: user)),
           );
         }
       } else {
@@ -80,7 +81,7 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 20.0),
                   const Text(
-                    "Login Siswa",
+                    "Login Guru",
                     style: TextStyle(
                         fontSize: 23,
                         fontWeight: FontWeight.bold

@@ -1,26 +1,24 @@
-import 'package:bk_uji_level_remake/bimbingan/bimbingan_sosial.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../bimbingan/bimbingan_karir.dart';
-import '../bimbingan/bimbingan_pribadi.dart';
+import '../bimbingan_siswa/bimbingan_belajar.dart';
 
-class UpdateBimbinganKarir extends StatefulWidget {
+class UpdateBimbinganBelajar extends StatefulWidget {
   final Map<String, dynamic> bimbinganData;
   final Map<String, dynamic> user;
 
-  const UpdateBimbinganKarir({
+  const UpdateBimbinganBelajar({
     required this.bimbinganData,
     required this.user,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UpdateBimbinganKarir> createState() => _UpdateBimbinganKarirState();
+  State<UpdateBimbinganBelajar> createState() => _UpdateBimbinganBelajarState();
 }
 
-class _UpdateBimbinganKarirState extends State<UpdateBimbinganKarir> {
+class _UpdateBimbinganBelajarState extends State<UpdateBimbinganBelajar> {
   final TextEditingController _alasanController = TextEditingController();
   final TextEditingController _tanggalController = TextEditingController();
   final TextEditingController _lokasiController = TextEditingController();
@@ -35,7 +33,7 @@ class _UpdateBimbinganKarirState extends State<UpdateBimbinganKarir> {
   }
 
   Future<void> updateDataToApi() async {
-    final url = "http://localhost:8000/api/ubah_bimbingan_karir/${widget.bimbinganData['id']}";
+    final url = "http://localhost:8000/api/ubah_bimbingan_belajar/${widget.bimbinganData['id']}";
     final body = {
       'alasan_pertemuan': _alasanController.text,
       'tanggal_pertemuan': _tanggalController.text,
@@ -77,12 +75,12 @@ class _UpdateBimbinganKarirState extends State<UpdateBimbinganKarir> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                                BimbinganKarir(user: widget.user)),
+                              BimbinganBelajar(user: widget.user)),
                     );
                   },
                 ),
                 const Text(
-                  "Ubah Bimbingan Karir",
+                  "Ubah Bimbingan Belajar",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 )
               ],

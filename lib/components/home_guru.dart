@@ -9,17 +9,17 @@ import '../bimbingan_siswa/bimbingan_karir.dart';
 import '../bimbingan_siswa/bimbingan_sosial.dart';
 import '../bimbingan_siswa/bimbingan_belajar.dart';
 import '../bimbingan_siswa/bimbingan_pribadi.dart';
-import 'login.dart';
+import 'login_guru.dart';
 
-class Home extends StatefulWidget {
+class HomeGuru extends StatefulWidget {
   final Map<String, dynamic> user;
-  const Home({required this.user, Key? key}) : super(key: key);
+  const HomeGuru({required this.user, Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeGuru> createState() => _HomeGuruState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeGuruState extends State<HomeGuru> {
   int bimbinganPribadiCount = 0;
   int bimbinganBelajarCount = 0;
   int bimbinganSosialCount = 0;

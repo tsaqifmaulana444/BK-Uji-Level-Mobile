@@ -1,14 +1,14 @@
-import 'package:bk_uji_level_remake/form_update/update_bimbingan_sosial.dart';
-import 'package:bk_uji_level_remake/forms/form_bimbingan_pribadi.dart';
-import 'package:bk_uji_level_remake/forms/form_bimbingan_sosial.dart';
+import 'package:bk_uji_level_remake/form_update_siswa/update_bimbingan_sosial.dart';
+import 'package:bk_uji_level_remake/forms_siswa/form_bimbingan_pribadi.dart';
+import 'package:bk_uji_level_remake/forms_siswa/form_bimbingan_sosial.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../components/home.dart';
-import '../form_update/update_bimbingan_pribadi.dart';
+import '../form_update_siswa/update_bimbingan_pribadi.dart';
 import 'details/detail_bimbingan_pribadi.dart';
-import '../form_update/update_bimbingan_pribadi.dart';
+import '../form_update_siswa/update_bimbingan_pribadi.dart';
 import 'details/detail_bimbingan_sosial.dart';
 
 class BimbinganSosial extends StatefulWidget {

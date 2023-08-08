@@ -1,23 +1,28 @@
-import 'package:bk_uji_level_remake/forms/form_bimbingan_belajar.dart';
-import 'package:bk_uji_level_remake/forms/form_bimbingan_pribadi.dart';
+import 'package:bk_uji_level_remake/bimbingan_siswa/details/detail_bimbingan_karir.dart';
+import 'package:bk_uji_level_remake/form_update_siswa/update_bimbingan_sosial.dart';
+import 'package:bk_uji_level_remake/forms_siswa/form_bimbingan_pribadi.dart';
+import 'package:bk_uji_level_remake/forms_siswa/form_bimbingan_sosial.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../components/home.dart';
-import '../form_update/update_bimbingan_pribadi.dart';
+import '../form_update_siswa/update_bimbingan_karir.dart';
+import '../form_update_siswa/update_bimbingan_pribadi.dart';
+import '../forms_siswa/form_bimbingan_karir.dart';
 import 'details/detail_bimbingan_pribadi.dart';
-import '../form_update/update_bimbingan_pribadi.dart';
+import '../form_update_siswa/update_bimbingan_pribadi.dart';
+import 'details/detail_bimbingan_sosial.dart';
 
-class BimbinganBelajar extends StatefulWidget {
+class BimbinganKarir extends StatefulWidget {
   final Map<String, dynamic> user;
-  const BimbinganBelajar({required this.user, Key? key}) : super(key: key);
+  const BimbinganKarir({required this.user, Key? key}) : super(key: key);
 
   @override
-  State<BimbinganBelajar> createState() => _BimbinganBelajarState();
+  State<BimbinganKarir> createState() => _BimbinganKarirState();
 }
 
-class _BimbinganBelajarState extends State<BimbinganBelajar> {
+class _BimbinganKarirState extends State<BimbinganKarir> {
   List<Map<String, dynamic>> _dataList = [];
 
   @override
@@ -28,7 +33,7 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
 
   Future<void> fetchDataFromApi() async {
     final response = await http.get(Uri.parse(
-        "http://localhost:8000/api/bimbingan_belajar/${widget.user["id"]}"));
+        "http://localhost:8000/api/bimbingan_karir/${widget.user["id"]}"));
     if (response.statusCode == 200) {
       final parsedResponse = json.decode(response.body);
 
@@ -46,7 +51,7 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
 
   Future<void> deleteDataFromApi(int id) async {
     final response = await http.delete(
-        Uri.parse("http://localhost:8000/api/hapus_bimbingan_belajar/$id"));
+        Uri.parse("http://localhost:8000/api/hapus_bimbingan_karir/$id"));
     if (response.statusCode == 200) {
       final parsedResponse = json.decode(response.body);
 
@@ -68,7 +73,7 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
         return AlertDialog(
           title: const Text("Konfirmasi"),
           content: const Text(
-              "Apakah Anda yakin ingin menghapus bimbingan beajar ini?"),
+              "Apakah Anda yakin ingin menghapus bimbingan karir ini?"),
           actions: <Widget>[
             TextButton(
               child: const Text("Batal"),
@@ -90,11 +95,11 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
     );
   }
 
-  void _navigateToUpdateBimbinganPribadi(Map<String, dynamic> data) {
+  void _navigateToUpdateBimbinganKarir(Map<String, dynamic> data) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => UpdateBimbinganPribadi(
+        builder: (context) => UpdateBimbinganKarir(
           bimbinganData: data,
           user: widget.user,
         ),
@@ -124,7 +129,7 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
                 ),
               ),
               const Text(
-                "List Bimbingan Belajar",
+                "List Bimbingan Karir",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
               ),
             ],
@@ -144,7 +149,7 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FormBimbinganBelajar(user: widget.user)),
+                            builder: (context) => FormBimbinganKarir(user: widget.user)),
                       );
                     },
                     child: const Text("Tambah Bimbingan",
@@ -185,14 +190,14 @@ class _BimbinganBelajarState extends State<BimbinganBelajar> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      DetailBimbinganPribadi(
+                                      DetailBimbinganKarir(
                                         bimbinganData: data,
                                         user: widget.user,
                                       ),
                                 ),
                               );
                             } else if (value == 'ubah') {
-                              _navigateToUpdateBimbinganPribadi(data);
+                              _navigateToUpdateBimbinganKarir(data);
                             }
                           },
                           itemBuilder: (BuildContext context) {

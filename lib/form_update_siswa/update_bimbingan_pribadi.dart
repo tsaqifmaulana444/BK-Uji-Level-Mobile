@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../bimbingan/bimbingan_belajar.dart';
+import '../bimbingan_siswa/bimbingan_pribadi.dart';
 
-class UpdateBimbinganBelajar extends StatefulWidget {
+class UpdateBimbinganPribadi extends StatefulWidget {
   final Map<String, dynamic> bimbinganData;
   final Map<String, dynamic> user;
 
-  const UpdateBimbinganBelajar({
+  const UpdateBimbinganPribadi({
     required this.bimbinganData,
     required this.user,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UpdateBimbinganBelajar> createState() => _UpdateBimbinganBelajarState();
+  State<UpdateBimbinganPribadi> createState() => _UpdateBimbinganPribadiState();
 }
 
-class _UpdateBimbinganBelajarState extends State<UpdateBimbinganBelajar> {
+class _UpdateBimbinganPribadiState extends State<UpdateBimbinganPribadi> {
   final TextEditingController _alasanController = TextEditingController();
   final TextEditingController _tanggalController = TextEditingController();
   final TextEditingController _lokasiController = TextEditingController();
@@ -33,7 +33,7 @@ class _UpdateBimbinganBelajarState extends State<UpdateBimbinganBelajar> {
   }
 
   Future<void> updateDataToApi() async {
-    final url = "http://localhost:8000/api/ubah_bimbingan_belajar/${widget.bimbinganData['id']}";
+    final url = "http://localhost:8000/api/ubah_bimbingan_pribadi/${widget.bimbinganData['id']}";
     final body = {
       'alasan_pertemuan': _alasanController.text,
       'tanggal_pertemuan': _tanggalController.text,
@@ -75,12 +75,12 @@ class _UpdateBimbinganBelajarState extends State<UpdateBimbinganBelajar> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              BimbinganBelajar(user: widget.user)),
+                              BimbinganPribadi(user: widget.user)),
                     );
                   },
                 ),
                 const Text(
-                  "Ubah Bimbingan Belajar",
+                  "Ubah Bimbingan Pribadi",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 )
               ],
